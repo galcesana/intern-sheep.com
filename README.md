@@ -1,4 +1,4 @@
-intern-sheep.com 
+# intern-sheep.com
 
 A smart resume tailoring application that helps job seekers customize their resumes to match specific job descriptions using AI technology.
 
@@ -20,8 +20,8 @@ A smart resume tailoring application that helps job seekers customize their resu
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/sheep-tailor.git
-cd sheep-tailor
+git clone https://github.com/yourusername/intern-sheep.com.git
+cd intern-sheep.com
 ```
 
 2. Create a virtual environment and activate it:
@@ -86,4 +86,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Google Cloud AI for providing the AI capabilities
 - Flask framework for the web application
 - All contributors and users of the project
- 
