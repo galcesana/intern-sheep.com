@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Viewport for mobile responsiveness -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV Tailor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600&family=Quicksand:wght@400;500;700&family=Dancing+Script&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="/assets/icons/Favicon.ico">
+
+  <style>
+    /* ----------------------------------
+       ORIGINAL STYLES (Mostly Unchanged)
+    ----------------------------------- */
+    body {
+      background-image: url('/static/images/background.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: #333;
+      font-family: 'Roboto', sans-serif;
+      margin: 0; /* Avoid default body margin that can cause horizontal scroll on some mobile browsers */
+      padding: 0;
+      overflow-x: hidden; /* Prevent any accidental horizontal scroll */
+    }
+    .container {
+      width: 100%;
+      max-width: 600px;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 16px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      margin: 3rem auto;
+      transition: transform 0.3s ease;
+    }
+    .container:hover {
+      transform: scale(1.03);
+    }
+    h1 {
+      font-size: 3.3rem;
+      font-family: 'Assistant';
+      font-weight: 700;
+      color: #202073;
+      margin-bottom: 1rem;
+      margin-top: -0.5rem;
+    }
+    .subheading {
+      font-size: 1.2rem;
+      font-family: 'Quicksand', sans-serif;
+      color: #666;
+      margin-bottom: 2rem;
+      margin-top: -1rem;
+    }
+    .form-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      padding: 0.8rem;
+      background-color: #f7f7f7;
+      transition: border-color 0.2s ease;
+    }
+    .form-group:hover,
+    .form-group:focus-within {
+      border-color: #4c6ef5;
+    }
+    .icon {
+      font-size: 1.5rem;
+      color: #4c6ef5;
+      margin-right: 0.8rem;
+    }
+    input[type="file"],
+    textarea {
+      width: 100%;
+      border: none;
+      font-size: 1rem;
+      outline: none;
+      background: none;
+      font-family: 'Assistant';
+    }
+    textarea {
+      padding: 0.5rem;
+      resize: vertical;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      background-color: #f7f7f7;
+      margin-bottom: 1rem;
+    }
+    textarea:focus {
+      border-color: #4c6ef5;
+    }
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      font-family: 'Assistant';
+      font-weight: 600;
+      color: #fff;
+      background-color: #4c6ef5;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 6px 20px rgba(76, 110, 245, 0.4);
+    }
+    button:hover {
+      background-color: #3b5bdb;
+      transform: translateY(-2px);
+    }
+
+    /* Loading Spinner */
+    #loading-spinner {
+      display: none;
+      font-size: 1rem;
+      color: #4c6ef5;
+      font-weight: 500;
+      position: relative;
+      text-align: center;
+    }
+    #loading-spinner::after {
+      content: "";
+      width: 20px;
+      height: 20px;
+      border: 3px solid #4c6ef5;
+      border-top-color: transparent;
+      border-radius: 50%;
+      position: absolute;
+      top: 2.5rem;
+      left: 50%;
+      transform: translate(-50%, 0);
+      animation: spin 3s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    /* "Generate New Resume" button */
+    #new-resume-button {
+      display: none;
+      padding: 0.9rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #4c6ef5;
+      font-family: 'Assistant';
+      background-color: #fff;
+      border: 2px solid #4c6ef5;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    #new-resume-button:hover {
+      background-color: #4c6ef5;
+      color: #fff;
+    }
+
+    /* SHEEP Logo (absolute) */
+    .sheep-logo-link {
+      position: absolute;
+      top: 0;
+      left: 10px;
+      font-size: 3.5rem; /* Big on desktop */
+      font-family: 'Assistant', cursive;
+      color: #051d7e;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .sheep-logo-link:hover {
+      color: #3a78eb;
+    }
+
+    /* "By Gal Cesana" link (absolute) */
+    .author-link {
+      position: absolute;
+      top: 65px; /* Desktop spacing */
+      left: 20px;
+      font-size: 1.5rem;
+      font-family: 'Dancing Script', cursive;
+      font-weight: 500;
+      color: #051d7e;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .author-link:hover {
+      color: #3b5bdb;
+    }
+
+    /* About Section */
+    .about-section {
+      font-family: 'Quicksand', sans-serif;
+      display: flex;              /* Two-column on desktop */
+      justify-content: space-between;
+      gap: 2rem;
+      max-width: 800px;
+      width: 100%;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      margin: 3rem auto;
+      text-align: left;
+    }
+    .about-section h2 {
+      font-size: 1.8rem;
+      color: #202073;
+      margin-top: -10px;
+      margin-bottom: 13px;
+    }
+    .about-section div {
+      margin: 0;
+      line-height: 1.6;
+      padding: 20px;
+    }
+    .about-section p {
+      margin-bottom: 5px;
+      font-size: 1.8rem;
+      line-height: 1.8;
+      word-wrap: break-word; /* Ensure long words wrap */
+    }
+    .about-section a {
+      color: #4C6EF5;
+      text-decoration: none;
+    }
+    .about-section a:hover {
+      text-decoration: underline;
+    }
+
+    /* ---------------------------------------
+       TWO COFFEE BUTTONS:
+         1) Desktop pinned (shown only on desktop)
+         2) Inside About section (shown only on mobile)
+    ---------------------------------------- */
+    /* 1) Desktop pinned version */
+    .coffee-button-desktop {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+    .coffee-button-desktop img {
+      height: 50px !important;
+      width: 180px !important;
+    }
+    /* 2) Mobile version (initially hidden) */
+    .coffee-button-mobile {
+      display: none; /* hidden on desktop by default */
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .coffee-button-mobile img {
+      height: 50px !important;
+      width: 180px !important;
+    }
+
+    /* --------------------------------------
+       MEDIA QUERY FOR MOBILE
+    --------------------------------------- */
+    @media (max-width: 768px) {
+      /* Let background scroll on mobile */
+      body {
+        background-attachment: scroll;
+      }
+
+      /* Shrink the SHEEP logo */
+      .sheep-logo-link {
+        font-size: 3rem;
+      }
+      /* Move "By Gal Cesana" up or down as needed */
+      .author-link {
+        top: 60px; /* Tweak as you like for spacing under "SHEEP" */
+        font-size: 1.2rem;
+      }
+      /* Hide pinned coffee button on mobile */
+      .coffee-button-desktop {
+        display: none;
+      }
+      /* Show coffee button inside About section on mobile */
+      .coffee-button-mobile {
+        display: block;
+      }
+      /* Extra top margin for the container so it doesn't hide behind pinned elements */
+      .container {
+        margin-top: 8rem;
+      }
+      /* ABOUT SECTION -> Single column on mobile */
+      .about-section {
+        flex-direction: column;  /* stack vertically */
+        align-items: flex-start; /* ensure left alignment */
+        gap: 1rem;               /* smaller gap */
+        padding: 1rem;
+        margin: 2rem auto;
+      }
+      .about-section h2 {
+        margin-top: 0;          /* remove negative margin on mobile */
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+      }
+      .about-section p {
+        font-size: 1.2rem;      /* smaller text on mobile */
+        line-height: 1.5;
+      }
+      .about-section div {
+        padding: 0;            /* reduce internal padding so it fits better */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1) Desktop pinned coffee button -->
+  <div class="coffee-button-desktop">
+    <a href="https://www.buymeacoffee.com/galcesana" target="_blank">
+      <img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me a Coffee">
+    </a>
+  </div>
+
+  <!-- SHEEP logo & "By Gal Cesana" links -->
+  <a href="https://en.wikipedia.org/wiki/Sheep" target="_blank" class="sheep-logo-link">
+    SHEEP
+    <img src="/static/images/sheep.png" alt="Sheep Logo"
+         style="width: 77px; vertical-align: top; margin-left: -10px; margin-top: 6px">
+  </a>
+  <a href="https://www.linkedin.com/in/gal-cesana-844509217/" target="_blank" class="author-link">
+    By Gal Cesana
+  </a>
+
+  <!-- Main Container -->
+  <div class="container">
+    <h1>Tailor Your Resume</h1>
+    <p class="subheading">Crafted specifically for your dream role</p>
+
+    <form id="resume-form" enctype="multipart/form-data">
+      <label for="resume-form" style="text-align:left; display:block; margin-bottom:0.5rem; color:#555;">
+        Drop Your Resume File - Word or PDF
+      </label>
+      <div class="form-group">
+        <span class="icon">📄</span>
+        <input type="file" id="resume" name="resume" accept=".pdf,.docx,.txt" required>
+      </div>
+
+      <label for="job-description" style="text-align:left; display:block; margin-bottom:0.5rem; color:#555;">
+        Job Description
+      </label>
+      <textarea id="job-description" name="job_description" rows="6"
+                placeholder="Enter the job description..." required></textarea>
+
+      <button type="button" onclick="submitForm()">Generate Tailored Resume</button>
+    </form>
+
+    <!-- Error button -->
+    <div id="error-button-container" style="text-align: center; margin-top: 1rem;"></div>
+    <!-- Loading spinner -->
+    <div id="loading-spinner">Generating your tailored resume...</div>
+    <!-- Download button -->
+    <div id="download-button-container" style="text-align: center; margin-top: 1rem;"></div>
+    <!-- "Generate New Resume" button -->
+    <button id="new-resume-button" onclick="reloadPage()">Generate New Resume</button>
+  </div>
+
+  <!-- About Section -->
+  <div class="about-section">
+    <div>
+      <div>
+        <h2>About Me</h2>
+        Hi, I'm Gal Cesana, a Computer Science student at The Hebrew University of Jerusalem passionate about developing innovative solutions.
+
+        <br><br>Drawing from my unique background as both an IDF HR Captain and a Data Annotator at SAIPS (Ford), I've gained valuable insights into how technology can streamline professional processes.
+
+        <br><br><strong>The Resume Tailor</strong>, built using Google's Gemini API, Flask, Docker, and LaTeX, and deployed on Google Cloud Platform, demonstrates my ability to create practical, scalable solutions to real-world challenges.
+
+        <br><br>Currently deepening my knowledge in computer science while working on various technical projects, I'm always eager to learn and innovate. Feel free to check out my projects on
+        <a href="https://github.com/galcesana" target="_blank">GitHub</a> or connect with me via
+        <a href="mailto:galcesana8@gmail.com">email</a>.
+      </div>
+    </div>
+    <!-- 2) Coffee button for mobile (shown at bottom) -->
+    <div class="coffee-button-mobile">
+      <a href="https://www.buymeacoffee.com/galcesana" target="_blank">
+        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me a Coffee">
+      </a>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script>
+    async function submitForm() {
+      const form = document.getElementById('resume-form');
+      const formData = new FormData(form);
+      const loadingSpinner = document.getElementById('loading-spinner');
+      const newResumeButton = document.getElementById('new-resume-button');
+      const downloadContainer = document.getElementById('download-button-container');
+      const errorButtonContainer = document.getElementById('error-button-container');
+
+      // Clear previous
+      downloadContainer.innerHTML = '';
+      errorButtonContainer.innerHTML = '';
+
+      // Show spinner & hide form
+      loadingSpinner.style.display = 'block';
+      form.style.display = 'none';
+
+      try {
+        const response = await fetch('/process_resume', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (response.ok) {
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+
+          // Download button
+          const downloadButton = document.createElement('button');
+          downloadButton.textContent = 'Download Tailored Resume';
+          downloadButton.style.padding = '0.9rem 2rem';
+          downloadButton.style.fontSize = '1rem';
+          downloadButton.style.fontWeight = '600';
+          downloadButton.style.color = '#4c6ef5';
+          downloadButton.style.backgroundColor = '#fff';
+          downloadButton.style.border = '2px solid #4c6ef5';
+          downloadButton.style.borderRadius = '12px';
+          downloadButton.style.cursor = 'pointer';
+          downloadButton.onclick = () => {
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'tailored_resume.pdf';
+            link.click();
+            window.URL.revokeObjectURL(url);
+          };
+
+          downloadContainer.appendChild(downloadButton);
+          newResumeButton.style.display = 'block';
+        } else {
+          // Show error button
+          const tryAgainButton = document.createElement('button');
+          tryAgainButton.textContent = 'An error occurred – Click to try again';
+          tryAgainButton.style.padding = '0.9rem 2rem';
+          tryAgainButton.style.fontSize = '1rem';
+          tryAgainButton.style.fontWeight = '600';
+          tryAgainButton.style.color = '#fff';
+          tryAgainButton.style.backgroundColor = '#007bff';
+          tryAgainButton.style.border = 'none';
+          tryAgainButton.style.borderRadius = '12px';
+          tryAgainButton.style.cursor = 'pointer';
+          tryAgainButton.style.fontFamily = 'Assistant, sans-serif';
+          tryAgainButton.onclick = () => { window.location.reload(); };
+          errorButtonContainer.appendChild(tryAgainButton);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        const tryAgainButton = document.createElement('button');
+        tryAgainButton.textContent = 'An error occurred – Click to try again';
+        tryAgainButton.style.padding = '0.9rem 2rem';
+        tryAgainButton.style.fontSize = '1rem';
+        tryAgainButton.style.fontWeight = '600';
+        tryAgainButton.style.color = '#fff';
+        tryAgainButton.style.backgroundColor = '#f44336';
+        tryAgainButton.style.border = 'none';
+        tryAgainButton.style.borderRadius = '12px';
+        tryAgainButton.style.cursor = 'pointer';
+        tryAgainButton.onclick = () => { window.location.reload(); };
+        errorButtonContainer.appendChild(tryAgainButton);
+      } finally {
+        loadingSpinner.style.display = 'none';
+      }
+    }
+
+    function reloadPage() {
+      window.location.reload();
+      loadingSpinner.style.display = 'none';
+    }
+  </script>
+</body>
+</html>
