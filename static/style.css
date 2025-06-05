@@ -1,0 +1,149 @@
+/* style.css */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f6fae7;
+  font-family: 'Quicksand', 'Assistant', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+}
+
+h1 {
+  margin-bottom: 10px;
+  color: #4a4a4a;
+  font-size: 24px;
+}
+
+#game-container {
+  position: relative;
+  width: 400px;
+  height: 460px; /* canvas (400px) + score (60px) */
+  border: 2px solid #4a4a4a;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.snake-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(60, 60, 60, 0.15);
+  max-width: 700px;
+  margin: 3rem auto;
+  padding: 2rem 2.5rem 2.5rem 2.5rem;
+  text-align: center;
+}
+
+#gameCanvas {
+  width: 90vw;
+  max-width: 400px;
+  height: 90vw;
+  max-height: 400px;
+  background: #a3d977;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(60, 60, 60, 0.10);
+  border: 2px solid #202073;
+  margin-bottom: 1.5rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#score, #gameOver {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #202073;
+}
+
+#gameOver {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border: 2px solid #333;
+  border-radius: 8px;
+  font-size: 2rem;
+  color: #f44336;
+  margin-top: 1rem;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+#gameOver.show {
+  opacity: 1;
+}
+
+#gameOver p {
+  font-size: 24px;
+  color: #c0392b;
+  margin-bottom: 10px;
+}
+
+#restartBtn {
+  display: block;
+  margin: 0.8rem auto 0 auto;   /* reduced top margin */
+  padding: 0.5rem 1.5rem;       /* smaller padding */
+  font-size: 1rem;
+  font-family: 'Assistant', sans-serif;
+  background: #4c6ef5;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#restartBtn:hover {
+  background: #3b5bdb;
+}
+
+.hidden {
+  display: none;
+}
+
+.snake-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.back-btn {
+  display: block;
+  width: fit-content;
+  margin: 2rem auto 0 auto;
+  padding: 0.5rem 1.5rem;
+  background: #202073;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1rem;
+  font-family: 'Assistant', sans-serif;
+  text-align: center;
+  transition: background 0.2s;
+}
+
+.back-btn:hover {
+  background: #4c6ef5;
+}
+
+.back-btn.top-left {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  margin: 0;
+  z-index: 10;
+}

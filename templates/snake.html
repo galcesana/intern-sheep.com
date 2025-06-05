@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sheep Snake Game</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <a href="{{ url_for('index') }}" class="back-btn top-left">← Back to CV Tailor</a>
+  <div class="snake-card">
+    <h2>🐑 Sheep Snake 🐑</h2>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <div id="score">Score: 0</div>
+    <div id="gameOver" style="display:none;">Game Over!</div>
+    <button id="restartBtn" style="display:none;">Restart</button>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

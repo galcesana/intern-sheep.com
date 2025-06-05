@@ -318,14 +318,18 @@
   </div>
 
   <!-- SHEEP logo & "By Gal Cesana" links -->
-  <a href="https://en.wikipedia.org/wiki/Sheep" target="_blank" class="sheep-logo-link">
-    SHEEP
-    <img src="/static/images/sheep.png" alt="Sheep Logo"
-         style="width: 77px; vertical-align: top; margin-left: -10px; margin-top: 6px">
-  </a>
-  <a href="https://www.linkedin.com/in/gal-cesana-844509217/" target="_blank" class="author-link">
-    By Gal Cesana
-  </a>
+  <div style="position: relative; height: 90px;">
+    <a href="{{ url_for('snake_game') }}" class="sheep-logo-link" style="text-decoration:none; display:inline-block;">
+      SHEEP
+    </a>
+    <a href="{{ url_for('snake_game') }}">
+      <img src="/static/images/sheep.png" alt="Sheep Logo"
+           style="width: 77px; vertical-align: top; margin-left: 10px; margin-top: 6px; position: absolute; top: 0; left: 170px;">
+    </a>
+    <a href="https://www.linkedin.com/in/gal-cesana-844509217/" target="_blank" class="author-link" style="position:absolute;top:65px;left:20px;">
+      By Gal Cesana
+    </a>
+  </div>
 
   <!-- Main Container -->
   <div class="container">

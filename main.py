@@ -59,6 +59,16 @@ def process_resume():
         # If an error occurs, send an error message back to the client
         return f"Error: {str(e)}. Please try reloading the site and retrying.", 500
 
+@app.route('/snake')
+def snake_game():
+    """
+    Renders the snake game page of the application.
+
+    Returns:
+    Template: HTML template for the snake game page.
+    """
+    return render_template('snake.html')
+
 if __name__ == '__main__':
     # # Create directories for storing uploaded and tailored resume files if they don't exist
     os.makedirs('uploads', exist_ok=True)
